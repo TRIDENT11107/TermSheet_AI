@@ -48,7 +48,7 @@ dist/
 Thumbs.db
 
 # Project specific
-*.pkl
+#*.pkl
 *.csv
 .pytest_cache/
 .coverage

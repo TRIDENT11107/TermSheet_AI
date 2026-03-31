@@ -53,7 +53,7 @@ const SUPPORTED_EXTENSIONS = [
   "tiff",
 ];
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+const API_BASE_URL = "https://termsheet-ai.onrender.com";
 
 const buildApiUrl = (path: string): string => {
   if (!API_BASE_URL) {
