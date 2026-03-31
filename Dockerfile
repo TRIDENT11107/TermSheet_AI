@@ -19,7 +19,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY Backend Backend
-COPY Datasets Datasets
 
 # Copy built frontend
 COPY --from=frontend-builder /app/Front\ End/react-app/dist /app/Frontend/dist
