@@ -1,0 +1,11 @@
+.git
+.vscode
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.log
+node_modules
+Front End/react-app/node_modules
+Front End/react-app/dist
+*.pptx

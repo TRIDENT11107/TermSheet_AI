@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TermSheet AI </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #3498db;
+        }
+        
+        .logo span {
+            color: #2ecc71;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #3498db;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .cta-button {
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%), url('https://images.unsplash.com/photo-1639322537504-6427a16b0a28?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding-top: 60px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #ccc;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        /* Upload Section */
+        .upload-section {
+            padding: 100px 0;
+            background-color: #111;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+        
+        .section-description {
+            font-size: 18px;
+            color: #ccc;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .upload-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #3498db;
+            border-radius: 10px;
+            padding: 60px 20px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: #2ecc71;
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            font-size: 18px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+        
+        .upload-subtext {
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .file-formats {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .file-format {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #3498db;
+            border: 2px solid #3498db;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 100px 0;
+            background-color: #000;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .feature-card {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid #333;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.4);
+            border-color: #3498db;
+        }
+        
+        .feature-icon {
+            font-size: 36px;
+            color: #9b59b6;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .feature-description {
+            color: #aaa;
+            line-height: 1.6;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 0;
+            background-color: #111;
+        }
+        
+        .steps-container {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        .steps-container:before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            z-index: 1;
+        }
+        
+        .step {
+            z-index: 2;
+            text-align: center;
+            width: 20%;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            color: white;
+        }
+        
+        .step-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .step-description {
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #111;
+            padding: 40px 0;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #3498db;
+        }
+        
+        .copyright {
+            color: #777;
+        }
+        
+        /* File Input */
+        #fileInput {
+            display: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .steps-container {
+                flex-direction: column;
+                gap: 40px;
+                align-items: center;
+            }
+            
+            .steps-container:before {
+                display: none;
+            }
+            
+            .step {
+                width: 80%;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">Term<span>Sheet</span>AI</div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#upload">Upload</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="cta-button">Get Started</button>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>AI-Powered Term Sheet Validation</h1>
+                <p>Revolutionize your post-trade processes with our cutting-edge AI solution that automates term sheet validation, reduces errors, and improves compliance efficiency.</p>
+                <button class="cta-button">Upload Your Term Sheet</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Upload Section -->
+    <section class="upload-section" id="upload">
+        <div class="container">
+            <h2 class="section-title">Validate Your Term Sheets</h2>
+            <p class="section-description">Upload your term sheets in any format and our AI will automatically extract, validate, and identify discrepancies in seconds.</p>
+            
+            <div class="upload-container">
+                <div class="upload-area" id="dropArea">
+                    <div class="upload-icon" style="color: #9b59b6;">📄</div>
+                    <div class="upload-text">Drag & Drop Your Files Here</div>
+                    <div class="upload-subtext">or click to browse your files</div>
+                    <div class="file-formats">
+                        <span class="file-format">PDF</span>
+                        <span class="file-format">DOCX</span>
+                        <span class="file-format">XLSX</span>
+                        <span class="file-format">TXT</span>
+                        <span class="file-format">JPG</span>
+                    </div>
+                </div>
+                <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.csv,.png,.jpg,.jpeg,.bmp,.tiff,.eml,.msg">
+                
+                <div class="buttons">
+                    <button class="btn btn-primary" id="uploadBtn">Upload & Validate</button>
+                    <button class="btn btn-secondary">Learn More</button>
+                </div>
+            </div>
+            
+            <div id="results" style="display: none; margin-top: 30px; background-color: #1a1a1a; border-radius: 10px; padding: 30px; border: 1px solid #3498db;">
+                <h3 style="color: #3498db; margin-bottom: 20px;">Analysis Results</h3>
+                <div id="resultContent"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <p class="section-description">Our AI-powered platform offers advanced capabilities to streamline term sheet validation and improve operational efficiency.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI-Powered Extraction</h3>
+                    <p class="feature-description">Advanced OCR and NLP technologies accurately extract data from any format of term sheet, including unstructured text.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">✓</div>
+                    <h3 class="feature-title">Automated Validation</h3>
+                    <p class="feature-description">Machine learning algorithms validate extracted data against predefined criteria to identify inconsistencies and errors.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Detailed Analytics</h3>
+                    <p class="feature-description">Comprehensive reports and analytics provide insights into validation trends and operational efficiency.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-Time Processing</h3>
+                    <p class="feature-description">Process term sheets in seconds instead of hours, dramatically improving post-trade workflow efficiency.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Secure & Compliant</h3>
+                    <p class="feature-description">Enterprise-grade security and regulatory compliance built into every step of the validation process.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Continuous Learning</h3>
+                    <p class="feature-description">The system continuously improves through machine learning from user feedback and validation results.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-description">Our streamlined process makes term sheet validation quick and efficient</p>
+            
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Upload</div>
+                    <div class="step-description">Upload your term sheets in any format through our secure platform</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Extract</div>
+                    <div class="step-description">Our AI extracts all relevant data using advanced OCR and NLP</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Validate</div>
+                    <div class="step-description">Machine learning algorithms validate the extracted data</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Review</div>
+                    <div class="step-description">Review validation results and identified discrepancies</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-title">Export</div>
+                    <div class="step-description">Export validated data to your core systems</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">Term<span>Sheet</span>AI</div>
+                <div class="footer-links">
+                    <a href="#">About Us</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="copyright"> 2025 TermSheetAI. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropArea = document.getElementById('dropArea');
+            const fileInput = document.getElementById('fileInput');
+            const uploadBtn = document.getElementById('uploadBtn');
+            
+            // Handle click on upload area
+            dropArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            // Handle file selection
+            fileInput.addEventListener('change', function() {
+                if (fileInput.files.length > 0) {
+                    const fileCount = fileInput.files.length;
+                    dropArea.querySelector('.upload-text').textContent = 
+                        fileCount > 1 ? `${fileCount} Files Selected` : fileInput.files[0].name;
+                    dropArea.style.borderColor = '#2ecc71';
+                }
+            });
+            
+            // Handle drag and drop
+            dropArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                dropArea.style.borderColor = '#3498db';
+                dropArea.style.backgroundColor = 'rgba(52, 152, 219, 0.05)';
+            });
+            
+            dropArea.addEventListener('dragleave', function() {
+                dropArea.style.borderColor = '#3498db';
+                dropArea.style.backgroundColor = 'transparent';
+            });
+            
+            dropArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                
+                if (e.dataTransfer.files.length > 0) {
+                    fileInput.files = e.dataTransfer.files;
+                    const fileCount = e.dataTransfer.files.length;
+                    dropArea.querySelector('.upload-text').textContent = 
+                        fileCount > 1 ? `${fileCount} Files Selected` : e.dataTransfer.files[0].name;
+                    dropArea.style.borderColor = '#2ecc71';
+                }
+            });
+            
+            // Upload button
+            uploadBtn.addEventListener('click', function() {
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    // Show loading indicator
+                    dropArea.querySelector('.upload-text').textContent = 'Processing...';
+                    
+                    // Debug information
+                    console.log('File being uploaded:', file);
+                    console.log('File name:', file.name);
+                    console.log('File type:', file.type);
+                    console.log('File size:', file.size);
+                    
+                    // Check file extension
+                    const fileName = file.name.toLowerCase();
+                    const fileExtension = fileName.split('.').pop();
+                    console.log('File extension detected:', fileExtension);
+                    const supportedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt', 'csv', 'png', 'jpg', 'jpeg', 'bmp', 'tiff', 'eml', 'msg'];
+                    
+                    if (!supportedExtensions.includes(fileExtension)) {
+                        const resultsDiv = document.getElementById('results');
+                        const resultContent = document.getElementById('resultContent');
+                        resultContent.innerHTML = `
+                            <p style="color: #e74c3c;">Unsupported file type: ${fileExtension}</p>
+                            <p style="color: #fff;">Supported file types: ${supportedExtensions.join(', ')}</p>
+                        `;
+                        resultsDiv.style.display = 'block';
+                        dropArea.querySelector('.upload-text').textContent = 'Drag & Drop Your Files Here';
+                        return;
+                    }
+
+                    fetch('http://localhost:5000/predict', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(res => {
+                        console.log('Response status:', res.status);
+                        if (!res.ok) {
+                            return res.json().then(data => {
+                                console.log('Error response:', data);
+                                throw new Error(data.error || 'Server error');
+                            });
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+                        console.log('Success response:', data);
+                        // Display results in a more user-friendly way
+                        const resultsDiv = document.getElementById('results');
+                        const resultContent = document.getElementById('resultContent');
+                        
+                        if (data.prediction) {
+                            let resultHTML = `
+                                <div style="margin-bottom: 20px;">
+                                    <h4 style="color: #2ecc71; margin-bottom: 10px;">Prediction</h4>
+                                    <p style="color: #fff; background-color: #2c3e50; padding: 10px; border-radius: 5px;">${data.prediction}</p>
+                                </div>
+                            `;
+
+                            if (data.final_assessment) {
+                                resultHTML += `
+                                    <div style="margin-bottom: 20px;">
+                                        <h4 style="color: #f39c12; margin-bottom: 10px;">Final Assessment (ML + Structure)</h4>
+                                        <div style="color: #fff; background-color: #2c3e50; padding: 10px; border-radius: 5px;">
+                                            <p>Label: <strong>${data.final_assessment.label}</strong></p>
+                                            <p>Confidence: ${data.final_assessment.confidence_band}</p>
+                                            <p>Structure Score: ${Number(data.final_assessment.structure_score || 0).toFixed(2)}</p>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+
+                            if (data.structure_validation) {
+                                const matchedSections = (data.structure_validation.matched_sections || []).join(', ') || 'None';
+                                const missingSections = (data.structure_validation.missing_sections || []).join(', ') || 'None';
+                                const warnings = (data.structure_validation.warnings || []).join('<br>') || 'None';
+                                resultHTML += `
+                                    <div style="margin-bottom: 20px;">
+                                        <h4 style="color: #1abc9c; margin-bottom: 10px;">Structure Validation</h4>
+                                        <div style="color: #fff; background-color: #2c3e50; padding: 10px; border-radius: 5px;">
+                                            <p>Schema: ${data.structure_validation.schema || 'N/A'}</p>
+                                            <p>Likely Real Structure: ${data.structure_validation.likely_real_structure ? 'Yes' : 'No'}</p>
+                                            <p>Score: ${Number(data.structure_validation.structure_score || 0).toFixed(2)}</p>
+                                            <p><strong>Matched Sections:</strong> ${matchedSections}</p>
+                                            <p><strong>Missing Sections:</strong> ${missingSections}</p>
+                                            <p><strong>Warnings:</strong><br>${warnings}</p>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                            
+                            if (data.entities && data.entities.length > 0) {
+                                resultHTML += `
+                                    <div style="margin-bottom: 20px;">
+                                        <h4 style="color: #3498db; margin-bottom: 10px;">Entities Detected</h4>
+                                        <ul style="color: #fff; background-color: #2c3e50; padding: 15px 15px 15px 35px; border-radius: 5px;">
+                                            ${data.entities.map(entity => `<li>${entity}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                `;
+                            }
+                            
+                            if (data.sentiment) {
+                                resultHTML += `
+                                    <div>
+                                        <h4 style="color: #9b59b6; margin-bottom: 10px;">Sentiment Analysis</h4>
+                                        <div style="color: #fff; background-color: #2c3e50; padding: 10px; border-radius: 5px;">
+                                            <p>Polarity: ${data.sentiment.polarity.toFixed(2)} (${data.sentiment.polarity > 0 ? 'Positive' : data.sentiment.polarity < 0 ? 'Negative' : 'Neutral'})</p>
+                                            <p>Subjectivity: ${data.sentiment.subjectivity.toFixed(2)} (${data.sentiment.subjectivity > 0.5 ? 'Subjective' : 'Objective'})</p>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                            
+                            resultContent.innerHTML = resultHTML;
+                            resultsDiv.style.display = 'block';
+                            
+                            // Reset upload area
+                            dropArea.querySelector('.upload-text').textContent = 'Drag & Drop Your Files Here';
+                            dropArea.style.borderColor = '#3498db';
+                        } else if (data.error) {
+                            resultContent.innerHTML = `<p style="color: #e74c3c;">Error: ${data.error}</p>`;
+                            resultsDiv.style.display = 'block';
+                            dropArea.querySelector('.upload-text').textContent = 'Drag & Drop Your Files Here';
+                        } else {
+                            resultContent.innerHTML = `<p style="color: #e74c3c;">Unexpected response from server.</p>`;
+                            resultsDiv.style.display = 'block';
+                            dropArea.querySelector('.upload-text').textContent = 'Drag & Drop Your Files Here';
+                        }
+                    })
+                    .catch(err => {
+                        const resultsDiv = document.getElementById('results');
+                        const resultContent = document.getElementById('resultContent');
+                        resultContent.innerHTML = `<p style="color: #e74c3c;">Error: ${err.message}</p>`;
+                        resultsDiv.style.display = 'block';
+                        dropArea.querySelector('.upload-text').textContent = 'Drag & Drop Your Files Here';
+                    });
+                } else {
+                    alert('Please select a file first.');
+                    fileInput.click();
+                }
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // CTA buttons
+            document.querySelectorAll('.cta-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const uploadSection = document.getElementById('upload');
+                    window.scrollTo({
+                        top: uploadSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "dataset_path": "D:\\Projects\\TermSheet AI\\Datasets\\term_sheet_bootstrap_labeled.csv",
+  "rows_used": 618,
+  "train_rows": 494,
+  "test_rows": 124,
+  "suspicious_label_pattern": false,
+  "label_warning": null,
+  "evaluation_note": "Bootstrap dataset was used. Holdout accuracy can be optimistic; validate with real externally labeled term sheets.",
+  "best_model": "logreg_baseline",
+  "best_accuracy": 1.0,
+  "candidate_results": [
+    {
+      "name": "logreg_baseline",
+      "accuracy": 1.0,
+      "macro_f1": 1.0
+    },
+    {
+      "name": "logreg_tuned",
+      "accuracy": 1.0,
+      "macro_f1": 1.0
+    },
+    {
+      "name": "linear_svc_word",
+      "accuracy": 1.0,
+      "macro_f1": 1.0
+    },
+    {
+      "name": "sgd_modified_huber",
+      "accuracy": 1.0,
+      "macro_f1": 1.0
+    },
+    {
+      "name": "linear_svc_char",
+      "accuracy": 1.0,
+      "macro_f1": 1.0
+    }
+  ]
+}

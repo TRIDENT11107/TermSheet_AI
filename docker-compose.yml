@@ -1,0 +1,8 @@
+services:
+  termsheet-ai:
+    build: .
+    container_name: termsheet-ai
+    ports:
+      - "5000:5000"
+    environment:
+      - PYTHONUNBUFFERED=1
