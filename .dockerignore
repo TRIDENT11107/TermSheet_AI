@@ -9,3 +9,7 @@ node_modules
 Front End/react-app/node_modules
 Front End/react-app/dist
 *.pptx
+Datasets
+trial files
+.env
+.env.local

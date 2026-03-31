@@ -1,8 +1,16 @@
 FROM node:22-alpine AS frontend-builder
 WORKDIR /app
 
-COPY . .
-RUN cd "Front End/react-app" && npm ci && npm run build
+# Copy only necessary files for frontend build
+COPY "Front End/react-app/package*.json" "Front End/react-app/"
+COPY "Front End/react-app/vite.config.ts" "Front End/react-app/"
+COPY "Front End/react-app/tsconfig.json" "Front End/react-app/"
+COPY "Front End/react-app/src" "Front End/react-app/src"
+COPY "Front End/react-app/public" "Front End/react-app/public"
+COPY "Front End/react-app/index.html" "Front End/react-app/"
+
+WORKDIR /app/Front\ End/react-app
+RUN npm ci && npm run build
 
 FROM python:3.11-slim
 WORKDIR /app
@@ -22,9 +30,6 @@ COPY Backend Backend
 
 # Copy built frontend
 COPY --from=frontend-builder /app/Front\ End/react-app/dist /app/Frontend/dist
-
-# Update Flask app to serve frontend
-RUN mkdir -p /app/Frontend
 
 EXPOSE 5000
 
