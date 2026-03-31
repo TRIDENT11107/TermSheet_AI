@@ -2,8 +2,7 @@ FROM node:22-alpine AS frontend-builder
 WORKDIR /app
 
 COPY . .
-RUN cd "Front End/react-app" && npm install && npm run build
-RUN mkdir -p /frontend-dist && cp -r "Front End/react-app/dist/." /frontend-dist/
+RUN cd "Front End/react-app" && npm ci && npm run build
 
 FROM python:3.11-slim
 WORKDIR /app
@@ -11,14 +10,22 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+# Install system dependencies for OCR
+RUN apt-get update && apt-get install -y \
+    tesseract-ocr \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY Backend Backend
 COPY Datasets Datasets
-COPY run_app.py .
 
-COPY --from=frontend-builder /frontend-dist /app/Front\ End/react-app/dist
+# Copy built frontend
+COPY --from=frontend-builder /app/Front\ End/react-app/dist /app/Frontend/dist
+
+# Update Flask app to serve frontend
+RUN mkdir -p /app/Frontend
 
 EXPOSE 5000
 

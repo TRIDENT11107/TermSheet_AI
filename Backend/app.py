@@ -25,7 +25,12 @@ logger = logging.getLogger(__name__)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_FRONTEND_DIST = PROJECT_ROOT / "Front End" / "react-app" / "dist"
+
+# Try production path first, then fallback to development path
+PRODUCTION_FRONTEND = Path("/app/Frontend/dist")
+DEV_FRONTEND = PROJECT_ROOT / "Front End" / "react-app" / "dist"
+DEFAULT_FRONTEND_DIST = PRODUCTION_FRONTEND if PRODUCTION_FRONTEND.exists() else DEV_FRONTEND
+
 MAX_INFERENCE_CHARS = 120_000
 
 
